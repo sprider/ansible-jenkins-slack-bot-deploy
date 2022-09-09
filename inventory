@@ -1,0 +1,8 @@
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_ssh_port=22 
+ansible_user=ubuntu
+
+[bot_hosts]
+bot-host1 ansible_ssh_host=3.139.101.32
+bot-host2 ansible_ssh_host=18.117.72.229
