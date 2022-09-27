@@ -53,6 +53,11 @@
         line: "{{ item.key }}={{ item.value }}"
         backup: true
       with_items: "{{ os_environment }}"
+    
+    - name: Refresh environment values
+      shell: . ~/.bashrc
+      args:
+        executable: "{{ bash_path }}"
 
     - name: Copy code from Jenkins workspace to code deployment directory
       copy:
