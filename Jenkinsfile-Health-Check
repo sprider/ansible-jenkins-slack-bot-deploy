@@ -1,0 +1,13 @@
+pipeline {
+  agent { label 'jenkins-linux' }
+  environment { 
+    AWS_EC2_JENKINS_PRIVATE_KEY=credentials('AWS_EC2_JENKINS_PRIVATE_KEY') 
+  }
+  stages {
+    stage('Check Python App Health') {
+      steps {
+        sh 'ansible-playbook -i inventory playbook-health-check.yml --private-key=$AWS_EC2_JENKINS_PRIVATE_KEY'
+      }
+    }
+  }
+}

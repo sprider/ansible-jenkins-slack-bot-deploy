@@ -1,0 +1,41 @@
+- name: Check Python App Health
+  hosts: bot_hosts
+  become: true
+  vars:
+    execution_username: ubuntu
+    bash_path: /bin/bash
+    code_deployment_path: /opt/apps/hello-bot
+    sh_bot_management_file_name: manage_bot.sh
+    bot_operation_start: start
+    bot_operation_status: status
+    mail_host: some.smtp.host
+    mail_port: 25
+    mail_from: No Reply <no_reply@domain.com>
+    mail_to: Joseph Velliah <jv@domain.com>
+  tasks:
+    - name: Gett Slack bot status
+      shell: "sh {{ sh_bot_management_file_name }} {{ bot_operation_status }}"
+      args:
+        chdir: "{{ code_deployment_path }}/"
+        executable: "{{ bash_path }}"
+      become_user: "{{ execution_username }}"
+      register: bot_status
+    
+    - name: Print bot status
+      debug: 
+        msg: "Bot status is: {{ bot_status.stdout }}"
+
+    - name: Send email if not running 
+      community.general.mail:
+        host: {{ mail_host }}
+        port: {{ mail_port }}
+        from: {{ mail_from }}
+        to: {{ mail_to }}
+        subject: "Slack Bot at host {{ ansible_hostname }} is not running"
+        body: "{{ lookup('template', 'failure_template.html.j2') }}"
+        subtype: html
+        charset: utf8
+      delegate_to: localhost
+      when: bot_status.stdout.find('no running bot processes') != -1
+      become_user: "{{ execution_username }}"
+        
