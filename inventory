@@ -4,5 +4,5 @@ ansible_ssh_port=22
 ansible_user=ubuntu
 
 [bot_hosts]
-bot-host1 ansible_ssh_host=18.117.110.61
-bot-host2 ansible_ssh_host=52.15.160.104
+bot-host1 ansible_ssh_host=3.133.82.98
+bot-host2 ansible_ssh_host=3.15.0.33
