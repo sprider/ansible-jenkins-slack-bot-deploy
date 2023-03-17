@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'jenkins-linux' }
+  agent any
   environment { 
     AWS_EC2_JENKINS_PRIVATE_KEY=credentials('AWS_EC2_JENKINS_PRIVATE_KEY') 
   }
