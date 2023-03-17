@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'jenkins-linux' }
+  agent any
   environment { 
     AWS_EC2_JENKINS_PRIVATE_KEY=credentials('AWS_EC2_JENKINS_PRIVATE_KEY') 
     SLACK_BOT_TOKEN=credentials('HELLO_BOT_SLACK_BOT_TOKEN')
